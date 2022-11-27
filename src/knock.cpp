@@ -1,15 +1,17 @@
+#include <iostream>
+#include <filesystem>
+
 #include "drmprocessorclientimpl.h"
 #include "libgourou.h"
 #include "libgourou_common.h"
-#include <filesystem>
 
 #ifndef KNOCK_VERSION
 #error KNOCK_VERSION must be defined
-#endif
+#endif /* !KNOCK_VERSION */
 
 std::string get_data_dir();
-void verify_absence(std::string file);
-void verify_presence(std::string file);
+void verify_absence(const std::string &file);
+void verify_presence(const std::string &file);
 
 int main(int argc, char **argv) try {
 
@@ -30,7 +32,7 @@ int main(int argc, char **argv) try {
   const std::string acsm_file = argv[1];
   verify_presence(acsm_file);
   const std::string acsm_stem =
-      acsm_file.substr(0, acsm_file.find_last_of("."));
+      acsm_file.substr(0, acsm_file.find_last_of('.'));
   const std::string drm_file = acsm_stem + ".drm";
   const std::string out_file = acsm_stem + ".out";
   verify_absence(drm_file);
@@ -85,7 +87,7 @@ int main(int argc, char **argv) try {
   std::filesystem::remove(acsm_file);
   std::cout << file_type + " file generated at " + ext_file << std::endl;
 
-  return 0;
+  return EXIT_SUCCESS;
 
 } catch (const gourou::Exception &e) {
   std::cerr << "error:\n" << e.what();
@@ -96,25 +98,25 @@ int main(int argc, char **argv) try {
 }
 
 std::string get_data_dir() {
-  char *xdg_data_home = std::getenv("XDG_DATA_HOME");
-  std::string knock_data;
+  const char *xdg_data_home = std::getenv("XDG_DATA_HOME");
+  std::filesystem::path knock_data;
   if (xdg_data_home != nullptr) {
     knock_data = xdg_data_home;
   } else {
-    knock_data = std::string(std::getenv("HOME")) + "/.local/share";
+    knock_data = std::filesystem::path(std::getenv("HOME")) / ".local" / "share";
   }
-  knock_data += "/knock/acsm";
+  knock_data /= "knock" / std::filesystem::path("acsm");
   return knock_data;
 }
 
-void verify_absence(std::string file) {
+void verify_absence(const std::string &file) {
   if (std::filesystem::exists(file)) {
     throw std::runtime_error("file " + file +
                              " must be moved out of the way or deleted");
   }
 }
 
-void verify_presence(std::string file) {
+void verify_presence(const std::string &file) {
   if (!std::filesystem::exists(file)) {
     throw std::runtime_error("file " + file + " does not exist");
   }

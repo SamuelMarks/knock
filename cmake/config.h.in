@@ -1,0 +1,9 @@
+#ifndef knock_CONFIG_H
+#define knock_CONFIG_H
+
+#define knock_VERSION_MAJOR @knock_VERSION_MAJOR@
+#define knock_VERSION_MINOR @knock_VERSION_MINOR@
+#define knock_VERSION_PATCH @knock_VERSION_PATCH@
+#define knock_VERSION       "@knock_VERSION@"
+
+#endif /* !knock_CONFIG_H */
