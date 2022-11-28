@@ -1,6 +1,12 @@
 {
   "name": "knock",
-  "version-string": "0.0.1",
+  "version-string": "1.3.1",
   "dependencies": [
+    "curl",
+    "libgourou",
+    "libzip",
+    "openssl",
+    "pugixml",
+    "updfparser"
   ]
 }

@@ -10,8 +10,8 @@
 #endif /* !KNOCK_VERSION */
 
 std::string get_data_dir();
-void verify_absence(const std::string &file);
-void verify_presence(const std::string &file);
+void verify_absence(const std::string &);
+void verify_presence(const std::string &);
 
 int main(int argc, char **argv) try {
 
