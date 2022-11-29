@@ -15,11 +15,7 @@ target_compile_definitions(
         KNOCK_VERSION="${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}${PROJECT_VERSION_TWEAK}"
 )
 
-find_package(CURL CONFIG REQUIRED)
-find_package(OpenSSL REQUIRED)
 find_package(libgourou CONFIG REQUIRED)
-find_package(libzip CONFIG REQUIRED)
-find_package(pugixml CONFIG REQUIRED)
 find_package(updfparser CONFIG REQUIRED)
 target_link_libraries(
         "${EXEC_NAME}"
@@ -29,14 +25,6 @@ target_link_libraries(
         "gourou_utils"
         "gourou_include"
         "gourou_compiler_flags"
-        "CURL::libcurl"
-)
-
-set_target_properties(
-        "${EXEC_NAME}"
-        PROPERTIES
-        LINKER_LANGUAGE
-        CXX
 )
 
 # install rules
